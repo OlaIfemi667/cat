@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
+#include "../include/functions.h"
 /**
  * main - C'est la fonction principale de ce projet
  * programmer l'utilitaire cat en C
@@ -24,33 +25,12 @@ int main(int argc, char *argv[])
 		return (EXIT_FAILURE);
 	}
 
-	if (argc == 2)
+	if (argc != 1)
 	{
-		char *completePath;
-		int ch = '\0', lp = strlen(path), lr = strlen(argv[1]);
-		completePath = (char *) malloc(sizeof(char) * (lr + lp) + 1);
-		strcat(completePath, path);
-		strcat(completePath, "/");
-		strcat(completePath, argv[1]);
-		printf("Vous voulez que j'affiche ce fichier \"%s\" \n\n", completePath);
-
-		FILE *fptr;
-		fptr = fopen(completePath, "r");
-		
-		if (fptr == NULL)
+		for (int i = 1; i < argc; i++)
 		{
-			printf("Le ficher \"%s\" n'existe pas\n\n", argv[1]);
-			exit(0);
+			printTheFile(path, argv[i]);
 		}
-		while((ch = fgetc(fptr)) != EOF)
-		{
-			putchar(ch);
-		}
-		
-		fclose(fptr);
-
-		/*Liberer l'espace*/
-		free(completePath);
 	}
 
 	/*Libérer l'espace mémore*/
